@@ -4,16 +4,19 @@ import fs from 'fs'
 
 const platform = `${os.platform}`
 
-export default function App() {
-  const [address, setAddress] = useState('?')
+export default function App({ win }) {
+  const [text, setText] = useState('你好世界！')
+  const [address, setAddress] = useState('')
   const [name, setName] = useState('?')
   const [deps, setDeps] = useState([])
 
-  useEffect(() => {
+  function fetchIpAddress() {
     fetch("http://ipecho.net/plain")
       .then(res => res.text())
       .then(text => setAddress(text))
+  }
 
+  useEffect(() => {
     readPackageJson()
       .then(data => {
         setName(data.name)
@@ -23,14 +26,24 @@ export default function App() {
 
   return (
     <div className="p-4">
-      <h1 className="mb-4">你好世界！</h1>
+      <h1 className="mb-4">{text}</h1>
       <div className="mb-4">
         Your OS is <span className="text-blue">{platform}</span>.
-        Your IP address is <span className="text-orange-dark">{address}</span>.
         The name of your app is <span className="text-green">{name}</span>.
+        {address ?
+          <span>Your IP address is <span className="text-orange-dark">{address}</span>.</span>
+          : null
+        }
       </div>
       <div className="mb-4">
-        <button className="bg-grey-light px-2 py-1 text-black rounded-lg" onClick={() => window.location.reload()}>Restart</button>
+        <Button
+          className="mr-2"
+          text="Generate"
+          onClick={() => setText(getRandomHanzi())} />
+        <Button
+          text="Get IP address"
+          onClick={fetchIpAddress}
+        />
       </div>
       <div className="mb-2">Your app has the following dependencies:</div>
       <ul>
@@ -40,6 +53,25 @@ export default function App() {
       </ul>
     </div>
   );
+}
+
+function Button({ text, className, onClick }) {
+  className = `bg-grey-light px-2 py-1 text-black rounded-lg ${className}`
+  return (
+    <button
+      className={className}
+      onClick={onClick}>{text}</button>
+  )
+}
+
+// Return a number between min and max (inclusive)
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function getRandomHanzi() {
+  let codePoint = getRandomInt(0x4e00, 0x9fff)
+  return String.fromCodePoint(codePoint)
 }
 
 function readPackageJson() {
