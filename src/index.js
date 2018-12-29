@@ -3,6 +3,7 @@ require('@babel/register')({
 })
 const React = require('react')
 const ReactDOM = require('react-dom')
+// Even though this file is in src/, you still have import from ./src
 const App = require('./src/App').default
 
 ReactDOM.render(

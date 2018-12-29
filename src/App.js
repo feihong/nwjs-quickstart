@@ -19,7 +19,7 @@ export default function App() {
         setName(data.name)
         setDeps(Object.entries(data.dependencies).map(pair => pair.join(' ')))
       })
-  }, [])
+  }, []) // last argument is [] to ensure callback runs only on mount
 
   return (
     <div>
