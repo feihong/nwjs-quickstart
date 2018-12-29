@@ -22,12 +22,17 @@ export default function App() {
   }, []) // last argument is [] to ensure callback runs only on mount
 
   return (
-    <div>
-      <h1>你好世界！</h1>
-      <p>You are using {platform}.</p>
-      <p>Your IP address is {address}.</p>
-      <p>The name of your app is "{name}".</p>
-      <p>Your app has the following dependencies:</p>
+    <div className="p-4">
+      <h1 className="mb-4">你好世界！</h1>
+      <div className="mb-4">
+        Your OS is <span className="text-blue">{platform}</span>.
+        Your IP address is <span className="text-orange-dark">{address}</span>.
+        The name of your app is <span className="text-green">{name}</span>.
+      </div>
+      <div className="mb-4">
+        <button className="bg-grey-light px-2 py-1 text-black rounded-lg" onClick={() => window.location.reload()}>Restart</button>
+      </div>
+      <div className="mb-2">Your app has the following dependencies:</div>
       <ul>
         {
           deps.map(dep => <li key={dep}>{dep}</li>)
