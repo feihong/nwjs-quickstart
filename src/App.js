@@ -20,7 +20,7 @@ export default function App({ win }) {
     readPackageJson()
       .then(data => {
         setName(data.name)
-        setDeps(Object.entries(data.dependencies).map(pair => pair.join(' ')))
+        setDeps(Object.entries(data.dependencies))
       })
   }, []) // last argument is [] to ensure callback runs only on mount
 
@@ -46,11 +46,25 @@ export default function App({ win }) {
         />
       </div>
       <div className="mb-2">Your app has the following dependencies:</div>
-      <ul>
-        {
-          deps.map(dep => <li key={dep}>{dep}</li>)
-        }
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Version</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            deps.map(dep => {
+              let [pkg, version] = dep
+              return <tr key={pkg}>
+                <td className="font-semibold">{pkg}</td>
+                <td className="text-grey-darker">{version}</td>
+              </tr>
+            })
+          }
+        </tbody>
+      </table>
     </div>
   );
 }
