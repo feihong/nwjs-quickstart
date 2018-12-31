@@ -12,6 +12,10 @@
     "react-dom": "^16.7.0-alpha.2"
   },
   "main": "index.html",
+  "window": {
+    "width": 380,
+    "height": 500
+  },
   "scripts": {
     "start": "nw --mixed-context"
   }

@@ -39,7 +39,7 @@ export default function App({ win }) {
         <Button
           className="mr-2"
           text="Generate"
-          onClick={() => setText(getRandomHanzi())} />
+          onClick={() => setText(getRandomHanzis())} />
         <Button
           text="Get IP address"
           onClick={fetchIpAddress}
@@ -86,6 +86,14 @@ function getRandomInt(min, max) {
 function getRandomHanzi() {
   let codePoint = getRandomInt(0x4e00, 0x9fff)
   return String.fromCodePoint(codePoint)
+}
+
+function getRandomHanzis() {
+  let result = []
+  for (let i = 0; i < getRandomInt(3, 11); i++) {
+    result.push(getRandomHanzi())
+  }
+  return result
 }
 
 function readPackageJson() {
